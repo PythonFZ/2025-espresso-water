@@ -20,6 +20,55 @@ stages:
     metrics:
     - nodes/AddDataH5MD_2/node-meta.json:
         cache: true
+  nn_128-128_Apax:
+    cmd: zntrack run apax.nodes.model.Apax --name nn_128-128_Apax
+    deps:
+    - nodes/AddDataH5MD/node-meta.json
+    - nodes/AddDataH5MD_1/node-meta.json
+    metrics:
+    - nodes/nn/128-128/Apax/metrics.json
+    - nodes/nn/128-128/Apax/node-meta.json:
+        cache: true
+    outs:
+    - nodes/nn/128-128/Apax/apax_model
+    - nodes/nn/128-128/Apax/train_atoms.h5
+    - nodes/nn/128-128/Apax/val_atoms.h5
+    params:
+    - config/apax-nn-128-128.yaml: null
+    - nn_128-128_Apax
+  nn_128-128_ApaxBatchPrediction:
+    cmd: zntrack run apax.nodes.analysis.ApaxBatchPrediction --name nn_128-128_ApaxBatchPrediction
+    deps:
+    - nodes/AddDataH5MD_2/node-meta.json
+    - nodes/nn/128-128/Apax/apax_model
+    - nodes/nn/128-128/Apax/metrics.json
+    - nodes/nn/128-128/Apax/train_atoms.h5
+    - nodes/nn/128-128/Apax/val_atoms.h5
+    metrics:
+    - nodes/nn/128-128/ApaxBatchPrediction/node-meta.json:
+        cache: true
+    outs:
+    - nodes/nn/128-128/ApaxBatchPrediction/frames.h5
+    params:
+    - nn_128-128_ApaxBatchPrediction
+  nn_128-128_PredictionMetrics:
+    cmd: zntrack run ipsuite.analysis.model.predict.PredictionMetrics --name nn_128-128_PredictionMetrics
+    deps:
+    - nodes/AddDataH5MD_2/node-meta.json
+    - nodes/nn/128-128/ApaxBatchPrediction/frames.h5
+    metrics:
+    - nodes/nn/128-128/PredictionMetrics/energy.json
+    - nodes/nn/128-128/PredictionMetrics/forces.json
+    - nodes/nn/128-128/PredictionMetrics/node-meta.json:
+        cache: true
+    - nodes/nn/128-128/PredictionMetrics/stress.json
+    - nodes/nn/128-128/PredictionMetrics/stress_deviat.json
+    - nodes/nn/128-128/PredictionMetrics/stress_hydro.json
+    outs:
+    - nodes/nn/128-128/PredictionMetrics/data.npz
+    - nodes/nn/128-128/PredictionMetrics/plots
+    params:
+    - nn_128-128_PredictionMetrics
   nn_16-16_Apax:
     cmd: zntrack run apax.nodes.model.Apax --name nn_16-16_Apax
     deps:

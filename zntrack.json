@@ -1187,5 +1187,151 @@
             "_type": "pathlib.Path",
             "value": "$nwd$/plots"
         }
+    },
+    "nn_128-128_Apax": {
+        "nwd": {
+            "_type": "pathlib.Path",
+            "value": "nodes/nn/128-128/Apax"
+        },
+        "data": {
+            "_type": "znflow.Connection",
+            "value": {
+                "instance": {
+                    "_type": "zntrack.Node",
+                    "value": {
+                        "module": "ipsuite.data_loading.add_data_h5md",
+                        "name": "AddDataH5MD",
+                        "cls": "AddDataH5MD",
+                        "remote": null,
+                        "rev": null
+                    }
+                },
+                "attribute": "frames",
+                "item": null
+            }
+        },
+        "config": "config/apax-nn-128-128.yaml",
+        "validation_data": {
+            "_type": "znflow.Connection",
+            "value": {
+                "instance": {
+                    "_type": "zntrack.Node",
+                    "value": {
+                        "module": "ipsuite.data_loading.add_data_h5md",
+                        "name": "AddDataH5MD_1",
+                        "cls": "AddDataH5MD",
+                        "remote": null,
+                        "rev": null
+                    }
+                },
+                "attribute": "frames",
+                "item": null
+            }
+        },
+        "model": null,
+        "model_directory": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/apax_model"
+        },
+        "train_data_file": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/train_atoms.h5"
+        },
+        "validation_data_file": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/val_atoms.h5"
+        }
+    },
+    "nn_128-128_ApaxBatchPrediction": {
+        "nwd": {
+            "_type": "pathlib.Path",
+            "value": "nodes/nn/128-128/ApaxBatchPrediction"
+        },
+        "data": {
+            "_type": "znflow.Connection",
+            "value": {
+                "instance": {
+                    "_type": "zntrack.Node",
+                    "value": {
+                        "module": "ipsuite.data_loading.add_data_h5md",
+                        "name": "AddDataH5MD_2",
+                        "cls": "AddDataH5MD",
+                        "remote": null,
+                        "rev": null
+                    }
+                },
+                "attribute": "frames",
+                "item": null
+            }
+        },
+        "model": {
+            "_type": "znflow.Connection",
+            "value": {
+                "instance": {
+                    "_type": "zntrack.Node",
+                    "value": {
+                        "module": "apax.nodes.model",
+                        "name": "nn_128-128_Apax",
+                        "cls": "Apax",
+                        "remote": null,
+                        "rev": null
+                    }
+                },
+                "attribute": null,
+                "item": null
+            }
+        },
+        "frames_path": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/frames.h5"
+        }
+    },
+    "nn_128-128_PredictionMetrics": {
+        "nwd": {
+            "_type": "pathlib.Path",
+            "value": "nodes/nn/128-128/PredictionMetrics"
+        },
+        "x": {
+            "_type": "znflow.Connection",
+            "value": {
+                "instance": {
+                    "_type": "zntrack.Node",
+                    "value": {
+                        "module": "apax.nodes.analysis",
+                        "name": "nn_128-128_ApaxBatchPrediction",
+                        "cls": "ApaxBatchPrediction",
+                        "remote": null,
+                        "rev": null
+                    }
+                },
+                "attribute": "frames",
+                "item": null
+            }
+        },
+        "y": {
+            "_type": "znflow.Connection",
+            "value": {
+                "instance": {
+                    "_type": "zntrack.Node",
+                    "value": {
+                        "module": "ipsuite.data_loading.add_data_h5md",
+                        "name": "AddDataH5MD_2",
+                        "cls": "AddDataH5MD",
+                        "remote": null,
+                        "rev": null
+                    }
+                },
+                "attribute": "frames",
+                "item": null
+            }
+        },
+        "data_file": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/data.npz"
+        },
+        "plots_dir": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/plots"
+        }
     }
 }

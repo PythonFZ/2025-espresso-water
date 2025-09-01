@@ -36,7 +36,7 @@ for r_max in [2, 3, 4, 5, 6]:
             x=test_eval.frames, y=test.frames
         )
 
-for nn in [(16, 16), (32, 32), (64, 64)]:
+for nn in [(16, 16), (32, 32), (64, 64), (128, 128)]:
     with project.group("nn", f"{nn[0]}-{nn[1]}"):
         config = deepcopy(reference)
         config["model"]["nn"] = list(nn)
