@@ -20,6 +20,300 @@ stages:
     metrics:
     - nodes/AddDataH5MD_2/node-meta.json:
         cache: true
+  n_basis_16_Apax:
+    cmd: zntrack run apax.nodes.model.Apax --name n_basis_16_Apax
+    deps:
+    - nodes/AddDataH5MD/node-meta.json
+    - nodes/AddDataH5MD_1/node-meta.json
+    metrics:
+    - nodes/n_basis/16/Apax/metrics.json
+    - nodes/n_basis/16/Apax/node-meta.json:
+        cache: true
+    outs:
+    - nodes/n_basis/16/Apax/apax_model
+    - nodes/n_basis/16/Apax/train_atoms.h5
+    - nodes/n_basis/16/Apax/val_atoms.h5
+    params:
+    - config/apax-n_basis-16.yaml: null
+    - n_basis_16_Apax
+  n_basis_16_ApaxBatchPrediction:
+    cmd: zntrack run apax.nodes.analysis.ApaxBatchPrediction --name n_basis_16_ApaxBatchPrediction
+    deps:
+    - nodes/AddDataH5MD_2/node-meta.json
+    - nodes/n_basis/16/Apax/apax_model
+    - nodes/n_basis/16/Apax/metrics.json
+    - nodes/n_basis/16/Apax/train_atoms.h5
+    - nodes/n_basis/16/Apax/val_atoms.h5
+    metrics:
+    - nodes/n_basis/16/ApaxBatchPrediction/node-meta.json:
+        cache: true
+    outs:
+    - nodes/n_basis/16/ApaxBatchPrediction/frames.h5
+    params:
+    - n_basis_16_ApaxBatchPrediction
+  n_basis_16_PredictionMetrics:
+    cmd: zntrack run ipsuite.analysis.model.predict.PredictionMetrics --name n_basis_16_PredictionMetrics
+    deps:
+    - nodes/AddDataH5MD_2/node-meta.json
+    - nodes/n_basis/16/ApaxBatchPrediction/frames.h5
+    metrics:
+    - nodes/n_basis/16/PredictionMetrics/energy.json
+    - nodes/n_basis/16/PredictionMetrics/forces.json
+    - nodes/n_basis/16/PredictionMetrics/node-meta.json:
+        cache: true
+    - nodes/n_basis/16/PredictionMetrics/stress.json
+    - nodes/n_basis/16/PredictionMetrics/stress_deviat.json
+    - nodes/n_basis/16/PredictionMetrics/stress_hydro.json
+    outs:
+    - nodes/n_basis/16/PredictionMetrics/data.npz
+    - nodes/n_basis/16/PredictionMetrics/plots
+    params:
+    - n_basis_16_PredictionMetrics
+  n_basis_4_Apax:
+    cmd: zntrack run apax.nodes.model.Apax --name n_basis_4_Apax
+    deps:
+    - nodes/AddDataH5MD/node-meta.json
+    - nodes/AddDataH5MD_1/node-meta.json
+    metrics:
+    - nodes/n_basis/4/Apax/metrics.json
+    - nodes/n_basis/4/Apax/node-meta.json:
+        cache: true
+    outs:
+    - nodes/n_basis/4/Apax/apax_model
+    - nodes/n_basis/4/Apax/train_atoms.h5
+    - nodes/n_basis/4/Apax/val_atoms.h5
+    params:
+    - config/apax-n_basis-4.yaml: null
+    - n_basis_4_Apax
+  n_basis_4_ApaxBatchPrediction:
+    cmd: zntrack run apax.nodes.analysis.ApaxBatchPrediction --name n_basis_4_ApaxBatchPrediction
+    deps:
+    - nodes/AddDataH5MD_2/node-meta.json
+    - nodes/n_basis/4/Apax/apax_model
+    - nodes/n_basis/4/Apax/metrics.json
+    - nodes/n_basis/4/Apax/train_atoms.h5
+    - nodes/n_basis/4/Apax/val_atoms.h5
+    metrics:
+    - nodes/n_basis/4/ApaxBatchPrediction/node-meta.json:
+        cache: true
+    outs:
+    - nodes/n_basis/4/ApaxBatchPrediction/frames.h5
+    params:
+    - n_basis_4_ApaxBatchPrediction
+  n_basis_4_PredictionMetrics:
+    cmd: zntrack run ipsuite.analysis.model.predict.PredictionMetrics --name n_basis_4_PredictionMetrics
+    deps:
+    - nodes/AddDataH5MD_2/node-meta.json
+    - nodes/n_basis/4/ApaxBatchPrediction/frames.h5
+    metrics:
+    - nodes/n_basis/4/PredictionMetrics/energy.json
+    - nodes/n_basis/4/PredictionMetrics/forces.json
+    - nodes/n_basis/4/PredictionMetrics/node-meta.json:
+        cache: true
+    - nodes/n_basis/4/PredictionMetrics/stress.json
+    - nodes/n_basis/4/PredictionMetrics/stress_deviat.json
+    - nodes/n_basis/4/PredictionMetrics/stress_hydro.json
+    outs:
+    - nodes/n_basis/4/PredictionMetrics/data.npz
+    - nodes/n_basis/4/PredictionMetrics/plots
+    params:
+    - n_basis_4_PredictionMetrics
+  n_basis_8_Apax:
+    cmd: zntrack run apax.nodes.model.Apax --name n_basis_8_Apax
+    deps:
+    - nodes/AddDataH5MD/node-meta.json
+    - nodes/AddDataH5MD_1/node-meta.json
+    metrics:
+    - nodes/n_basis/8/Apax/metrics.json
+    - nodes/n_basis/8/Apax/node-meta.json:
+        cache: true
+    outs:
+    - nodes/n_basis/8/Apax/apax_model
+    - nodes/n_basis/8/Apax/train_atoms.h5
+    - nodes/n_basis/8/Apax/val_atoms.h5
+    params:
+    - config/apax-n_basis-8.yaml: null
+    - n_basis_8_Apax
+  n_basis_8_ApaxBatchPrediction:
+    cmd: zntrack run apax.nodes.analysis.ApaxBatchPrediction --name n_basis_8_ApaxBatchPrediction
+    deps:
+    - nodes/AddDataH5MD_2/node-meta.json
+    - nodes/n_basis/8/Apax/apax_model
+    - nodes/n_basis/8/Apax/metrics.json
+    - nodes/n_basis/8/Apax/train_atoms.h5
+    - nodes/n_basis/8/Apax/val_atoms.h5
+    metrics:
+    - nodes/n_basis/8/ApaxBatchPrediction/node-meta.json:
+        cache: true
+    outs:
+    - nodes/n_basis/8/ApaxBatchPrediction/frames.h5
+    params:
+    - n_basis_8_ApaxBatchPrediction
+  n_basis_8_PredictionMetrics:
+    cmd: zntrack run ipsuite.analysis.model.predict.PredictionMetrics --name n_basis_8_PredictionMetrics
+    deps:
+    - nodes/AddDataH5MD_2/node-meta.json
+    - nodes/n_basis/8/ApaxBatchPrediction/frames.h5
+    metrics:
+    - nodes/n_basis/8/PredictionMetrics/energy.json
+    - nodes/n_basis/8/PredictionMetrics/forces.json
+    - nodes/n_basis/8/PredictionMetrics/node-meta.json:
+        cache: true
+    - nodes/n_basis/8/PredictionMetrics/stress.json
+    - nodes/n_basis/8/PredictionMetrics/stress_deviat.json
+    - nodes/n_basis/8/PredictionMetrics/stress_hydro.json
+    outs:
+    - nodes/n_basis/8/PredictionMetrics/data.npz
+    - nodes/n_basis/8/PredictionMetrics/plots
+    params:
+    - n_basis_8_PredictionMetrics
+  n_radial_5_Apax:
+    cmd: zntrack run apax.nodes.model.Apax --name n_radial_5_Apax
+    deps:
+    - nodes/AddDataH5MD/node-meta.json
+    - nodes/AddDataH5MD_1/node-meta.json
+    metrics:
+    - nodes/n_radial/5/Apax/metrics.json
+    - nodes/n_radial/5/Apax/node-meta.json:
+        cache: true
+    outs:
+    - nodes/n_radial/5/Apax/apax_model
+    - nodes/n_radial/5/Apax/train_atoms.h5
+    - nodes/n_radial/5/Apax/val_atoms.h5
+    params:
+    - config/apax-n_radial-5.yaml: null
+    - n_radial_5_Apax
+  n_radial_5_ApaxBatchPrediction:
+    cmd: zntrack run apax.nodes.analysis.ApaxBatchPrediction --name n_radial_5_ApaxBatchPrediction
+    deps:
+    - nodes/AddDataH5MD_2/node-meta.json
+    - nodes/n_radial/5/Apax/apax_model
+    - nodes/n_radial/5/Apax/metrics.json
+    - nodes/n_radial/5/Apax/train_atoms.h5
+    - nodes/n_radial/5/Apax/val_atoms.h5
+    metrics:
+    - nodes/n_radial/5/ApaxBatchPrediction/node-meta.json:
+        cache: true
+    outs:
+    - nodes/n_radial/5/ApaxBatchPrediction/frames.h5
+    params:
+    - n_radial_5_ApaxBatchPrediction
+  n_radial_5_PredictionMetrics:
+    cmd: zntrack run ipsuite.analysis.model.predict.PredictionMetrics --name n_radial_5_PredictionMetrics
+    deps:
+    - nodes/AddDataH5MD_2/node-meta.json
+    - nodes/n_radial/5/ApaxBatchPrediction/frames.h5
+    metrics:
+    - nodes/n_radial/5/PredictionMetrics/energy.json
+    - nodes/n_radial/5/PredictionMetrics/forces.json
+    - nodes/n_radial/5/PredictionMetrics/node-meta.json:
+        cache: true
+    - nodes/n_radial/5/PredictionMetrics/stress.json
+    - nodes/n_radial/5/PredictionMetrics/stress_deviat.json
+    - nodes/n_radial/5/PredictionMetrics/stress_hydro.json
+    outs:
+    - nodes/n_radial/5/PredictionMetrics/data.npz
+    - nodes/n_radial/5/PredictionMetrics/plots
+    params:
+    - n_radial_5_PredictionMetrics
+  n_radial_6_Apax:
+    cmd: zntrack run apax.nodes.model.Apax --name n_radial_6_Apax
+    deps:
+    - nodes/AddDataH5MD/node-meta.json
+    - nodes/AddDataH5MD_1/node-meta.json
+    metrics:
+    - nodes/n_radial/6/Apax/metrics.json
+    - nodes/n_radial/6/Apax/node-meta.json:
+        cache: true
+    outs:
+    - nodes/n_radial/6/Apax/apax_model
+    - nodes/n_radial/6/Apax/train_atoms.h5
+    - nodes/n_radial/6/Apax/val_atoms.h5
+    params:
+    - config/apax-n_radial-6.yaml: null
+    - n_radial_6_Apax
+  n_radial_6_ApaxBatchPrediction:
+    cmd: zntrack run apax.nodes.analysis.ApaxBatchPrediction --name n_radial_6_ApaxBatchPrediction
+    deps:
+    - nodes/AddDataH5MD_2/node-meta.json
+    - nodes/n_radial/6/Apax/apax_model
+    - nodes/n_radial/6/Apax/metrics.json
+    - nodes/n_radial/6/Apax/train_atoms.h5
+    - nodes/n_radial/6/Apax/val_atoms.h5
+    metrics:
+    - nodes/n_radial/6/ApaxBatchPrediction/node-meta.json:
+        cache: true
+    outs:
+    - nodes/n_radial/6/ApaxBatchPrediction/frames.h5
+    params:
+    - n_radial_6_ApaxBatchPrediction
+  n_radial_6_PredictionMetrics:
+    cmd: zntrack run ipsuite.analysis.model.predict.PredictionMetrics --name n_radial_6_PredictionMetrics
+    deps:
+    - nodes/AddDataH5MD_2/node-meta.json
+    - nodes/n_radial/6/ApaxBatchPrediction/frames.h5
+    metrics:
+    - nodes/n_radial/6/PredictionMetrics/energy.json
+    - nodes/n_radial/6/PredictionMetrics/forces.json
+    - nodes/n_radial/6/PredictionMetrics/node-meta.json:
+        cache: true
+    - nodes/n_radial/6/PredictionMetrics/stress.json
+    - nodes/n_radial/6/PredictionMetrics/stress_deviat.json
+    - nodes/n_radial/6/PredictionMetrics/stress_hydro.json
+    outs:
+    - nodes/n_radial/6/PredictionMetrics/data.npz
+    - nodes/n_radial/6/PredictionMetrics/plots
+    params:
+    - n_radial_6_PredictionMetrics
+  n_radial_7_Apax:
+    cmd: zntrack run apax.nodes.model.Apax --name n_radial_7_Apax
+    deps:
+    - nodes/AddDataH5MD/node-meta.json
+    - nodes/AddDataH5MD_1/node-meta.json
+    metrics:
+    - nodes/n_radial/7/Apax/metrics.json
+    - nodes/n_radial/7/Apax/node-meta.json:
+        cache: true
+    outs:
+    - nodes/n_radial/7/Apax/apax_model
+    - nodes/n_radial/7/Apax/train_atoms.h5
+    - nodes/n_radial/7/Apax/val_atoms.h5
+    params:
+    - config/apax-n_radial-7.yaml: null
+    - n_radial_7_Apax
+  n_radial_7_ApaxBatchPrediction:
+    cmd: zntrack run apax.nodes.analysis.ApaxBatchPrediction --name n_radial_7_ApaxBatchPrediction
+    deps:
+    - nodes/AddDataH5MD_2/node-meta.json
+    - nodes/n_radial/7/Apax/apax_model
+    - nodes/n_radial/7/Apax/metrics.json
+    - nodes/n_radial/7/Apax/train_atoms.h5
+    - nodes/n_radial/7/Apax/val_atoms.h5
+    metrics:
+    - nodes/n_radial/7/ApaxBatchPrediction/node-meta.json:
+        cache: true
+    outs:
+    - nodes/n_radial/7/ApaxBatchPrediction/frames.h5
+    params:
+    - n_radial_7_ApaxBatchPrediction
+  n_radial_7_PredictionMetrics:
+    cmd: zntrack run ipsuite.analysis.model.predict.PredictionMetrics --name n_radial_7_PredictionMetrics
+    deps:
+    - nodes/AddDataH5MD_2/node-meta.json
+    - nodes/n_radial/7/ApaxBatchPrediction/frames.h5
+    metrics:
+    - nodes/n_radial/7/PredictionMetrics/energy.json
+    - nodes/n_radial/7/PredictionMetrics/forces.json
+    - nodes/n_radial/7/PredictionMetrics/node-meta.json:
+        cache: true
+    - nodes/n_radial/7/PredictionMetrics/stress.json
+    - nodes/n_radial/7/PredictionMetrics/stress_deviat.json
+    - nodes/n_radial/7/PredictionMetrics/stress_hydro.json
+    outs:
+    - nodes/n_radial/7/PredictionMetrics/data.npz
+    - nodes/n_radial/7/PredictionMetrics/plots
+    params:
+    - n_radial_7_PredictionMetrics
   nn_128-128_Apax:
     cmd: zntrack run apax.nodes.model.Apax --name nn_128-128_Apax
     deps:

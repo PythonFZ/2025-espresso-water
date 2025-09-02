@@ -53,7 +53,39 @@ for nn in [(16, 16), (32, 32), (64, 64), (128, 128)]:
             x=test_eval.frames, y=test.frames
         )
 
+for n_basis in [4, 8, 16]:
+    with project.group("n_basis", f"{n_basis}"):
+        config = deepcopy(reference)
+        config["model"]["basis"]["n_basis"] = n_basis
+        file = Path(f"config/apax-n_basis-{n_basis}.yaml")
+        file.write_text(yaml.dump(config))
 
+        model = Apax(
+            config=file.as_posix(),
+            data=train.frames,
+            validation_data=val.frames,
+        )
+        test_eval = ApaxBatchPrediction(data=test.frames, model=model)
+        ips.PredictionMetrics(
+            x=test_eval.frames, y=test.frames
+        )
+
+for n_radial in [5, 6, 7]:
+    with project.group("n_radial", f"{n_radial}"):
+        config = deepcopy(reference)
+        config["model"]["basis"]["n_radial"] = n_radial
+        file = Path(f"config/apax-n_radial-{n_radial}.yaml")
+        file.write_text(yaml.dump(config))
+
+        model = Apax(
+            config=file.as_posix(),
+            data=train.frames,
+            validation_data=val.frames,
+        )
+        test_eval = ApaxBatchPrediction(data=test.frames, model=model)
+        ips.PredictionMetrics(
+            x=test_eval.frames, y=test.frames
+        )
 
 if __name__ == "__main__":
     project.build()
