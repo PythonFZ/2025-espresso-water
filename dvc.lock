@@ -1939,3 +1939,1143 @@ stages:
       hash: md5
       md5: 99914b932bd37a50b983c5e7c90ae93b
       size: 2
+  n_basis_4_Apax:
+    cmd: zntrack run apax.nodes.model.Apax --name n_basis_4_Apax
+    deps:
+    - path: nodes/AddDataH5MD/node-meta.json
+      hash: md5
+      md5: f36d01695e5b7cae341196f1239e980d
+      size: 447
+    - path: nodes/AddDataH5MD_1/node-meta.json
+      hash: md5
+      md5: 289852b7c1580ab14612a30e795b83bb
+      size: 446
+    params:
+      params.yaml:
+        n_basis_4_Apax:
+          log_level: info
+          nl_skin: 0.5
+      config/apax-n_basis-4.yaml:
+        callbacks:
+        - name: csv
+        data:
+          batch_size: 1
+          dataset:
+            processing: cached
+          valid_batch_size: 40
+        data_parallel: true
+        loss:
+        - atoms_exponent: 1
+          loss_type: nll
+          name: energy
+          weight: 1.0
+        - atoms_exponent: 1
+          loss_type: nll
+          name: forces
+          weight: 2.0
+        metrics:
+        - name: energy
+          reductions:
+          - mae
+        - name: forces
+          reductions:
+          - mae
+        model:
+          b_init: zeros
+          basis:
+            n_basis: 4
+            name: bessel
+            r_max: 5.5
+          calc_stress: false
+          descriptor_dtype: fp32
+          ensemble:
+            kind: shallow
+            n_members: 16
+          n_radial: 6
+          name: gmnn
+          nn:
+          - 128
+          - 128
+          readout_dtype: fp32
+          scale_shift_dtype: fp64
+          use_ntk: false
+          w_init: lecun
+        n_epochs: 10000
+        optimizer:
+          emb_lr: 0.0001
+          gradient_clipping: 10.0
+          kwargs:
+            b1: 0.85
+            b2: 0.99
+            weight_decay: 0.0002
+          name: adamw
+          nn_lr: 0.0001
+          rep_prefactor_lr: 0.0001
+          rep_scale_lr: 0.0001
+          scale_lr: 0.0001
+          schedule:
+            decay_factor: 0.96
+            name: cyclic_cosine
+            period: 50
+          shift_lr: 0.0001
+        patience: 500
+    outs:
+    - path: nodes/n_basis/4/Apax/apax_model
+      hash: md5
+      md5: 207bba8f8eca78231c7f5a2cc6a84d97.dir
+      size: 10739273
+      nfiles: 53
+    - path: nodes/n_basis/4/Apax/metrics.json
+      hash: md5
+      md5: 57170e99c4634b5641ed9e608326c60e
+      size: 199
+    - path: nodes/n_basis/4/Apax/node-meta.json
+      hash: md5
+      md5: af22c20125a6b814a366cf171ff16307
+      size: 2823
+    - path: nodes/n_basis/4/Apax/train_atoms.h5
+      hash: md5
+      md5: 6a2cbda900def274803a682b0d2d7d6d
+      size: 11356466
+    - path: nodes/n_basis/4/Apax/val_atoms.h5
+      hash: md5
+      md5: feeccaad34caf333488f359971e0f834
+      size: 1472217
+  n_basis_4_ApaxBatchPrediction:
+    cmd: zntrack run apax.nodes.analysis.ApaxBatchPrediction --name 
+      n_basis_4_ApaxBatchPrediction
+    deps:
+    - path: nodes/AddDataH5MD_2/node-meta.json
+      hash: md5
+      md5: 4b946fcffae1256c2bf1d459e9b96e22
+      size: 447
+    - path: nodes/n_basis/4/Apax/apax_model
+      hash: md5
+      md5: 207bba8f8eca78231c7f5a2cc6a84d97.dir
+      size: 10739273
+      nfiles: 53
+    - path: nodes/n_basis/4/Apax/metrics.json
+      hash: md5
+      md5: 57170e99c4634b5641ed9e608326c60e
+      size: 199
+    - path: nodes/n_basis/4/Apax/train_atoms.h5
+      hash: md5
+      md5: 6a2cbda900def274803a682b0d2d7d6d
+      size: 11356466
+    - path: nodes/n_basis/4/Apax/val_atoms.h5
+      hash: md5
+      md5: feeccaad34caf333488f359971e0f834
+      size: 1472217
+    params:
+      params.yaml:
+        n_basis_4_ApaxBatchPrediction:
+          batch_size: 1
+    outs:
+    - path: nodes/n_basis/4/ApaxBatchPrediction/frames.h5
+      hash: md5
+      md5: ec26cf31910d49585e354de03062446f
+      size: 13551940
+    - path: nodes/n_basis/4/ApaxBatchPrediction/node-meta.json
+      hash: md5
+      md5: f0e23a462358cfe09d338c748dfcb9bf
+      size: 1293
+  n_basis_4_PredictionMetrics:
+    cmd: zntrack run ipsuite.analysis.model.predict.PredictionMetrics --name 
+      n_basis_4_PredictionMetrics
+    deps:
+    - path: nodes/AddDataH5MD_2/node-meta.json
+      hash: md5
+      md5: 4b946fcffae1256c2bf1d459e9b96e22
+      size: 447
+    - path: nodes/n_basis/4/ApaxBatchPrediction/frames.h5
+      hash: md5
+      md5: ec26cf31910d49585e354de03062446f
+      size: 13551940
+    params:
+      params.yaml:
+        n_basis_4_PredictionMetrics:
+          figure_ymax: {}
+    outs:
+    - path: nodes/n_basis/4/PredictionMetrics/data.npz
+      hash: md5
+      md5: 6169416a34235eaf570f6cc444b572ea
+      size: 2217230
+    - path: nodes/n_basis/4/PredictionMetrics/energy.json
+      hash: md5
+      md5: eedc759ba17eb6bd82e01cf8ec61a5ad
+      size: 160
+    - path: nodes/n_basis/4/PredictionMetrics/forces.json
+      hash: md5
+      md5: 7d502baee5b54684db448dde66168bef
+      size: 164
+    - path: nodes/n_basis/4/PredictionMetrics/node-meta.json
+      hash: md5
+      md5: 60d82ee3b518c1135dc98033c6150d96
+      size: 783
+    - path: nodes/n_basis/4/PredictionMetrics/plots
+      hash: md5
+      md5: 2460e7039239cbd6ce4ac5eef9aad330.dir
+      size: 105647
+      nfiles: 2
+    - path: nodes/n_basis/4/PredictionMetrics/stress.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+    - path: nodes/n_basis/4/PredictionMetrics/stress_deviat.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+    - path: nodes/n_basis/4/PredictionMetrics/stress_hydro.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+  n_basis_8_Apax:
+    cmd: zntrack run apax.nodes.model.Apax --name n_basis_8_Apax
+    deps:
+    - path: nodes/AddDataH5MD/node-meta.json
+      hash: md5
+      md5: f36d01695e5b7cae341196f1239e980d
+      size: 447
+    - path: nodes/AddDataH5MD_1/node-meta.json
+      hash: md5
+      md5: 289852b7c1580ab14612a30e795b83bb
+      size: 446
+    params:
+      params.yaml:
+        n_basis_8_Apax:
+          log_level: info
+          nl_skin: 0.5
+      config/apax-n_basis-8.yaml:
+        callbacks:
+        - name: csv
+        data:
+          batch_size: 1
+          dataset:
+            processing: cached
+          valid_batch_size: 40
+        data_parallel: true
+        loss:
+        - atoms_exponent: 1
+          loss_type: nll
+          name: energy
+          weight: 1.0
+        - atoms_exponent: 1
+          loss_type: nll
+          name: forces
+          weight: 2.0
+        metrics:
+        - name: energy
+          reductions:
+          - mae
+        - name: forces
+          reductions:
+          - mae
+        model:
+          b_init: zeros
+          basis:
+            n_basis: 8
+            name: bessel
+            r_max: 5.5
+          calc_stress: false
+          descriptor_dtype: fp32
+          ensemble:
+            kind: shallow
+            n_members: 16
+          n_radial: 6
+          name: gmnn
+          nn:
+          - 128
+          - 128
+          readout_dtype: fp32
+          scale_shift_dtype: fp64
+          use_ntk: false
+          w_init: lecun
+        n_epochs: 10000
+        optimizer:
+          emb_lr: 0.0001
+          gradient_clipping: 10.0
+          kwargs:
+            b1: 0.85
+            b2: 0.99
+            weight_decay: 0.0002
+          name: adamw
+          nn_lr: 0.0001
+          rep_prefactor_lr: 0.0001
+          rep_scale_lr: 0.0001
+          scale_lr: 0.0001
+          schedule:
+            decay_factor: 0.96
+            name: cyclic_cosine
+            period: 50
+          shift_lr: 0.0001
+        patience: 500
+    outs:
+    - path: nodes/n_basis/8/Apax/apax_model
+      hash: md5
+      md5: bcfde3fc63e0c12cf1f2fadd8efc2152.dir
+      size: 15644597
+      nfiles: 52
+    - path: nodes/n_basis/8/Apax/metrics.json
+      hash: md5
+      md5: c0bfc5a4c4cb1fe11760d796ba9897a7
+      size: 199
+    - path: nodes/n_basis/8/Apax/node-meta.json
+      hash: md5
+      md5: d43e2795bf5b0eff321c9ee33b4729e2
+      size: 2823
+    - path: nodes/n_basis/8/Apax/train_atoms.h5
+      hash: md5
+      md5: 6a2cbda900def274803a682b0d2d7d6d
+      size: 11356466
+    - path: nodes/n_basis/8/Apax/val_atoms.h5
+      hash: md5
+      md5: feeccaad34caf333488f359971e0f834
+      size: 1472217
+  n_basis_8_ApaxBatchPrediction:
+    cmd: zntrack run apax.nodes.analysis.ApaxBatchPrediction --name 
+      n_basis_8_ApaxBatchPrediction
+    deps:
+    - path: nodes/AddDataH5MD_2/node-meta.json
+      hash: md5
+      md5: 4b946fcffae1256c2bf1d459e9b96e22
+      size: 447
+    - path: nodes/n_basis/8/Apax/apax_model
+      hash: md5
+      md5: bcfde3fc63e0c12cf1f2fadd8efc2152.dir
+      size: 15644597
+      nfiles: 52
+    - path: nodes/n_basis/8/Apax/metrics.json
+      hash: md5
+      md5: c0bfc5a4c4cb1fe11760d796ba9897a7
+      size: 199
+    - path: nodes/n_basis/8/Apax/train_atoms.h5
+      hash: md5
+      md5: 6a2cbda900def274803a682b0d2d7d6d
+      size: 11356466
+    - path: nodes/n_basis/8/Apax/val_atoms.h5
+      hash: md5
+      md5: feeccaad34caf333488f359971e0f834
+      size: 1472217
+    params:
+      params.yaml:
+        n_basis_8_ApaxBatchPrediction:
+          batch_size: 1
+    outs:
+    - path: nodes/n_basis/8/ApaxBatchPrediction/frames.h5
+      hash: md5
+      md5: 2af0fafa19af3d3b6f8b6af62adf9aba
+      size: 13498565
+    - path: nodes/n_basis/8/ApaxBatchPrediction/node-meta.json
+      hash: md5
+      md5: 6fa97ea485fa7e38d07dcb96e489a20d
+      size: 1293
+  n_basis_8_PredictionMetrics:
+    cmd: zntrack run ipsuite.analysis.model.predict.PredictionMetrics --name 
+      n_basis_8_PredictionMetrics
+    deps:
+    - path: nodes/AddDataH5MD_2/node-meta.json
+      hash: md5
+      md5: 4b946fcffae1256c2bf1d459e9b96e22
+      size: 447
+    - path: nodes/n_basis/8/ApaxBatchPrediction/frames.h5
+      hash: md5
+      md5: 2af0fafa19af3d3b6f8b6af62adf9aba
+      size: 13498565
+    params:
+      params.yaml:
+        n_basis_8_PredictionMetrics:
+          figure_ymax: {}
+    outs:
+    - path: nodes/n_basis/8/PredictionMetrics/data.npz
+      hash: md5
+      md5: 909d17697ce82b224bf8ddfc683b6102
+      size: 2217230
+    - path: nodes/n_basis/8/PredictionMetrics/energy.json
+      hash: md5
+      md5: f852f7bd9e49b581f9061c7cf38fe7ea
+      size: 164
+    - path: nodes/n_basis/8/PredictionMetrics/forces.json
+      hash: md5
+      md5: a602db4a9836b3c37e8007092929ccfc
+      size: 163
+    - path: nodes/n_basis/8/PredictionMetrics/node-meta.json
+      hash: md5
+      md5: b3e2b042f10cf0ca07d21ea1b0e24bd2
+      size: 783
+    - path: nodes/n_basis/8/PredictionMetrics/plots
+      hash: md5
+      md5: 37a3814a767d81627ebf94f3519ce4eb.dir
+      size: 181893
+      nfiles: 2
+    - path: nodes/n_basis/8/PredictionMetrics/stress.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+    - path: nodes/n_basis/8/PredictionMetrics/stress_deviat.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+    - path: nodes/n_basis/8/PredictionMetrics/stress_hydro.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+  n_radial_5_Apax:
+    cmd: zntrack run apax.nodes.model.Apax --name n_radial_5_Apax
+    deps:
+    - path: nodes/AddDataH5MD/node-meta.json
+      hash: md5
+      md5: f36d01695e5b7cae341196f1239e980d
+      size: 447
+    - path: nodes/AddDataH5MD_1/node-meta.json
+      hash: md5
+      md5: 289852b7c1580ab14612a30e795b83bb
+      size: 446
+    params:
+      params.yaml:
+        n_radial_5_Apax:
+          log_level: info
+          nl_skin: 0.5
+      config/apax-n_radial-5.yaml:
+        callbacks:
+        - name: csv
+        data:
+          batch_size: 1
+          dataset:
+            processing: cached
+          valid_batch_size: 40
+        data_parallel: true
+        loss:
+        - atoms_exponent: 1
+          loss_type: nll
+          name: energy
+          weight: 1.0
+        - atoms_exponent: 1
+          loss_type: nll
+          name: forces
+          weight: 2.0
+        metrics:
+        - name: energy
+          reductions:
+          - mae
+        - name: forces
+          reductions:
+          - mae
+        model:
+          b_init: zeros
+          basis:
+            n_basis: 16
+            name: bessel
+            r_max: 5.5
+          calc_stress: false
+          descriptor_dtype: fp32
+          ensemble:
+            kind: shallow
+            n_members: 16
+          n_radial: 5
+          name: gmnn
+          nn:
+          - 128
+          - 128
+          readout_dtype: fp32
+          scale_shift_dtype: fp64
+          use_ntk: false
+          w_init: lecun
+        n_epochs: 10000
+        optimizer:
+          emb_lr: 0.0001
+          gradient_clipping: 10.0
+          kwargs:
+            b1: 0.85
+            b2: 0.99
+            weight_decay: 0.0002
+          name: adamw
+          nn_lr: 0.0001
+          rep_prefactor_lr: 0.0001
+          rep_scale_lr: 0.0001
+          scale_lr: 0.0001
+          schedule:
+            decay_factor: 0.96
+            name: cyclic_cosine
+            period: 50
+          shift_lr: 0.0001
+        patience: 500
+    outs:
+    - path: nodes/n_radial/5/Apax/apax_model
+      hash: md5
+      md5: 4f0d316c7f1b67e51b40aa02f2ff9c17.dir
+      size: 20552061
+      nfiles: 51
+    - path: nodes/n_radial/5/Apax/metrics.json
+      hash: md5
+      md5: 096e8cb4292fb5303e70eab6fd35d459
+      size: 198
+    - path: nodes/n_radial/5/Apax/node-meta.json
+      hash: md5
+      md5: 0ecbadce2acc29b56d91d42a1a854e69
+      size: 2825
+    - path: nodes/n_radial/5/Apax/train_atoms.h5
+      hash: md5
+      md5: 6a2cbda900def274803a682b0d2d7d6d
+      size: 11356466
+    - path: nodes/n_radial/5/Apax/val_atoms.h5
+      hash: md5
+      md5: feeccaad34caf333488f359971e0f834
+      size: 1472217
+  n_radial_5_ApaxBatchPrediction:
+    cmd: zntrack run apax.nodes.analysis.ApaxBatchPrediction --name 
+      n_radial_5_ApaxBatchPrediction
+    deps:
+    - path: nodes/AddDataH5MD_2/node-meta.json
+      hash: md5
+      md5: 4b946fcffae1256c2bf1d459e9b96e22
+      size: 447
+    - path: nodes/n_radial/5/Apax/apax_model
+      hash: md5
+      md5: 4f0d316c7f1b67e51b40aa02f2ff9c17.dir
+      size: 20552061
+      nfiles: 51
+    - path: nodes/n_radial/5/Apax/metrics.json
+      hash: md5
+      md5: 096e8cb4292fb5303e70eab6fd35d459
+      size: 198
+    - path: nodes/n_radial/5/Apax/train_atoms.h5
+      hash: md5
+      md5: 6a2cbda900def274803a682b0d2d7d6d
+      size: 11356466
+    - path: nodes/n_radial/5/Apax/val_atoms.h5
+      hash: md5
+      md5: feeccaad34caf333488f359971e0f834
+      size: 1472217
+    params:
+      params.yaml:
+        n_radial_5_ApaxBatchPrediction:
+          batch_size: 1
+    outs:
+    - path: nodes/n_radial/5/ApaxBatchPrediction/frames.h5
+      hash: md5
+      md5: 18f9a1780cb23e37ac6b2453d156d6e2
+      size: 13498892
+    - path: nodes/n_radial/5/ApaxBatchPrediction/node-meta.json
+      hash: md5
+      md5: 88faeb94c30d379faa0bccd2312256f7
+      size: 1299
+  n_radial_5_PredictionMetrics:
+    cmd: zntrack run ipsuite.analysis.model.predict.PredictionMetrics --name 
+      n_radial_5_PredictionMetrics
+    deps:
+    - path: nodes/AddDataH5MD_2/node-meta.json
+      hash: md5
+      md5: 4b946fcffae1256c2bf1d459e9b96e22
+      size: 447
+    - path: nodes/n_radial/5/ApaxBatchPrediction/frames.h5
+      hash: md5
+      md5: 18f9a1780cb23e37ac6b2453d156d6e2
+      size: 13498892
+    params:
+      params.yaml:
+        n_radial_5_PredictionMetrics:
+          figure_ymax: {}
+    outs:
+    - path: nodes/n_radial/5/PredictionMetrics/data.npz
+      hash: md5
+      md5: a75b615f6ef7c6352844f65df50fde36
+      size: 2217230
+    - path: nodes/n_radial/5/PredictionMetrics/energy.json
+      hash: md5
+      md5: 09e507c25b45cbe5fc382d74442b286e
+      size: 165
+    - path: nodes/n_radial/5/PredictionMetrics/forces.json
+      hash: md5
+      md5: e7ca0930d6a0b2edbb62f81784ffa0a3
+      size: 166
+    - path: nodes/n_radial/5/PredictionMetrics/node-meta.json
+      hash: md5
+      md5: b033242599ac20c2327b7b6db67ae957
+      size: 786
+    - path: nodes/n_radial/5/PredictionMetrics/plots
+      hash: md5
+      md5: f3a3a6dbf09b9572dbbb6efb6b85a8f6.dir
+      size: 134861
+      nfiles: 2
+    - path: nodes/n_radial/5/PredictionMetrics/stress.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+    - path: nodes/n_radial/5/PredictionMetrics/stress_deviat.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+    - path: nodes/n_radial/5/PredictionMetrics/stress_hydro.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+  n_radial_6_Apax:
+    cmd: zntrack run apax.nodes.model.Apax --name n_radial_6_Apax
+    deps:
+    - path: nodes/AddDataH5MD/node-meta.json
+      hash: md5
+      md5: f36d01695e5b7cae341196f1239e980d
+      size: 447
+    - path: nodes/AddDataH5MD_1/node-meta.json
+      hash: md5
+      md5: 289852b7c1580ab14612a30e795b83bb
+      size: 446
+    params:
+      params.yaml:
+        n_radial_6_Apax:
+          log_level: info
+          nl_skin: 0.5
+      config/apax-n_radial-6.yaml:
+        callbacks:
+        - name: csv
+        data:
+          batch_size: 1
+          dataset:
+            processing: cached
+          valid_batch_size: 40
+        data_parallel: true
+        loss:
+        - atoms_exponent: 1
+          loss_type: nll
+          name: energy
+          weight: 1.0
+        - atoms_exponent: 1
+          loss_type: nll
+          name: forces
+          weight: 2.0
+        metrics:
+        - name: energy
+          reductions:
+          - mae
+        - name: forces
+          reductions:
+          - mae
+        model:
+          b_init: zeros
+          basis:
+            n_basis: 16
+            name: bessel
+            r_max: 5.5
+          calc_stress: false
+          descriptor_dtype: fp32
+          ensemble:
+            kind: shallow
+            n_members: 16
+          n_radial: 6
+          name: gmnn
+          nn:
+          - 128
+          - 128
+          readout_dtype: fp32
+          scale_shift_dtype: fp64
+          use_ntk: false
+          w_init: lecun
+        n_epochs: 10000
+        optimizer:
+          emb_lr: 0.0001
+          gradient_clipping: 10.0
+          kwargs:
+            b1: 0.85
+            b2: 0.99
+            weight_decay: 0.0002
+          name: adamw
+          nn_lr: 0.0001
+          rep_prefactor_lr: 0.0001
+          rep_scale_lr: 0.0001
+          scale_lr: 0.0001
+          schedule:
+            decay_factor: 0.96
+            name: cyclic_cosine
+            period: 50
+          shift_lr: 0.0001
+        patience: 500
+    outs:
+    - path: nodes/n_radial/6/Apax/apax_model
+      hash: md5
+      md5: 8dcd6a2dd3cc9a6e04775e437d390e53.dir
+      size: 25111512
+      nfiles: 51
+    - path: nodes/n_radial/6/Apax/metrics.json
+      hash: md5
+      md5: f23632b3775093f4c7e1f3123db46529
+      size: 199
+    - path: nodes/n_radial/6/Apax/node-meta.json
+      hash: md5
+      md5: 01ca73c75dcec180c7fb50f568b93f19
+      size: 2827
+    - path: nodes/n_radial/6/Apax/train_atoms.h5
+      hash: md5
+      md5: 6a2cbda900def274803a682b0d2d7d6d
+      size: 11356466
+    - path: nodes/n_radial/6/Apax/val_atoms.h5
+      hash: md5
+      md5: feeccaad34caf333488f359971e0f834
+      size: 1472217
+  n_radial_6_ApaxBatchPrediction:
+    cmd: zntrack run apax.nodes.analysis.ApaxBatchPrediction --name 
+      n_radial_6_ApaxBatchPrediction
+    deps:
+    - path: nodes/AddDataH5MD_2/node-meta.json
+      hash: md5
+      md5: 4b946fcffae1256c2bf1d459e9b96e22
+      size: 447
+    - path: nodes/n_radial/6/Apax/apax_model
+      hash: md5
+      md5: 8dcd6a2dd3cc9a6e04775e437d390e53.dir
+      size: 25111512
+      nfiles: 51
+    - path: nodes/n_radial/6/Apax/metrics.json
+      hash: md5
+      md5: f23632b3775093f4c7e1f3123db46529
+      size: 199
+    - path: nodes/n_radial/6/Apax/train_atoms.h5
+      hash: md5
+      md5: 6a2cbda900def274803a682b0d2d7d6d
+      size: 11356466
+    - path: nodes/n_radial/6/Apax/val_atoms.h5
+      hash: md5
+      md5: feeccaad34caf333488f359971e0f834
+      size: 1472217
+    params:
+      params.yaml:
+        n_radial_6_ApaxBatchPrediction:
+          batch_size: 1
+    outs:
+    - path: nodes/n_radial/6/ApaxBatchPrediction/frames.h5
+      hash: md5
+      md5: 0336f20960074e4fa0d06e6cda4dc50e
+      size: 13502570
+    - path: nodes/n_radial/6/ApaxBatchPrediction/node-meta.json
+      hash: md5
+      md5: edae8dc01810668488402929b7fb4e46
+      size: 1299
+  n_radial_6_PredictionMetrics:
+    cmd: zntrack run ipsuite.analysis.model.predict.PredictionMetrics --name 
+      n_radial_6_PredictionMetrics
+    deps:
+    - path: nodes/AddDataH5MD_2/node-meta.json
+      hash: md5
+      md5: 4b946fcffae1256c2bf1d459e9b96e22
+      size: 447
+    - path: nodes/n_radial/6/ApaxBatchPrediction/frames.h5
+      hash: md5
+      md5: 0336f20960074e4fa0d06e6cda4dc50e
+      size: 13502570
+    params:
+      params.yaml:
+        n_radial_6_PredictionMetrics:
+          figure_ymax: {}
+    outs:
+    - path: nodes/n_radial/6/PredictionMetrics/data.npz
+      hash: md5
+      md5: 6bddd5c3643329b3ae2ee2ec4e2c1077
+      size: 2217230
+    - path: nodes/n_radial/6/PredictionMetrics/energy.json
+      hash: md5
+      md5: 1f3b1cd25cfe7703f4bbc51e11870d3a
+      size: 165
+    - path: nodes/n_radial/6/PredictionMetrics/forces.json
+      hash: md5
+      md5: d6fa01852b2590f8ddf963e6d5f9d8d4
+      size: 164
+    - path: nodes/n_radial/6/PredictionMetrics/node-meta.json
+      hash: md5
+      md5: 2a2429bdcb8917dcf5bdc4810a917946
+      size: 786
+    - path: nodes/n_radial/6/PredictionMetrics/plots
+      hash: md5
+      md5: ed8a609d3f44807c2fcac5f4239a4838.dir
+      size: 145125
+      nfiles: 2
+    - path: nodes/n_radial/6/PredictionMetrics/stress.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+    - path: nodes/n_radial/6/PredictionMetrics/stress_deviat.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+    - path: nodes/n_radial/6/PredictionMetrics/stress_hydro.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+  n_radial_7_Apax:
+    cmd: zntrack run apax.nodes.model.Apax --name n_radial_7_Apax
+    deps:
+    - path: nodes/AddDataH5MD/node-meta.json
+      hash: md5
+      md5: f36d01695e5b7cae341196f1239e980d
+      size: 447
+    - path: nodes/AddDataH5MD_1/node-meta.json
+      hash: md5
+      md5: 289852b7c1580ab14612a30e795b83bb
+      size: 446
+    params:
+      params.yaml:
+        n_radial_7_Apax:
+          log_level: info
+          nl_skin: 0.5
+      config/apax-n_radial-7.yaml:
+        callbacks:
+        - name: csv
+        data:
+          batch_size: 1
+          dataset:
+            processing: cached
+          valid_batch_size: 40
+        data_parallel: true
+        loss:
+        - atoms_exponent: 1
+          loss_type: nll
+          name: energy
+          weight: 1.0
+        - atoms_exponent: 1
+          loss_type: nll
+          name: forces
+          weight: 2.0
+        metrics:
+        - name: energy
+          reductions:
+          - mae
+        - name: forces
+          reductions:
+          - mae
+        model:
+          b_init: zeros
+          basis:
+            n_basis: 16
+            name: bessel
+            r_max: 5.5
+          calc_stress: false
+          descriptor_dtype: fp32
+          ensemble:
+            kind: shallow
+            n_members: 16
+          n_radial: 7
+          name: gmnn
+          nn:
+          - 128
+          - 128
+          readout_dtype: fp32
+          scale_shift_dtype: fp64
+          use_ntk: false
+          w_init: lecun
+        n_epochs: 10000
+        optimizer:
+          emb_lr: 0.0001
+          gradient_clipping: 10.0
+          kwargs:
+            b1: 0.85
+            b2: 0.99
+            weight_decay: 0.0002
+          name: adamw
+          nn_lr: 0.0001
+          rep_prefactor_lr: 0.0001
+          rep_scale_lr: 0.0001
+          scale_lr: 0.0001
+          schedule:
+            decay_factor: 0.96
+            name: cyclic_cosine
+            period: 50
+          shift_lr: 0.0001
+        patience: 500
+    outs:
+    - path: nodes/n_radial/7/Apax/apax_model
+      hash: md5
+      md5: eeb49ff8daa973df4e29de5d3a9f92f4.dir
+      size: 30102407
+      nfiles: 54
+    - path: nodes/n_radial/7/Apax/metrics.json
+      hash: md5
+      md5: acd4d98d3b9e4855f20657342736ea4f
+      size: 200
+    - path: nodes/n_radial/7/Apax/node-meta.json
+      hash: md5
+      md5: f8508d0d1636fda5e16c52b0bc66aa9a
+      size: 2826
+    - path: nodes/n_radial/7/Apax/train_atoms.h5
+      hash: md5
+      md5: 6a2cbda900def274803a682b0d2d7d6d
+      size: 11356466
+    - path: nodes/n_radial/7/Apax/val_atoms.h5
+      hash: md5
+      md5: feeccaad34caf333488f359971e0f834
+      size: 1472217
+  n_radial_7_ApaxBatchPrediction:
+    cmd: zntrack run apax.nodes.analysis.ApaxBatchPrediction --name 
+      n_radial_7_ApaxBatchPrediction
+    deps:
+    - path: nodes/AddDataH5MD_2/node-meta.json
+      hash: md5
+      md5: 4b946fcffae1256c2bf1d459e9b96e22
+      size: 447
+    - path: nodes/n_radial/7/Apax/apax_model
+      hash: md5
+      md5: eeb49ff8daa973df4e29de5d3a9f92f4.dir
+      size: 30102407
+      nfiles: 54
+    - path: nodes/n_radial/7/Apax/metrics.json
+      hash: md5
+      md5: acd4d98d3b9e4855f20657342736ea4f
+      size: 200
+    - path: nodes/n_radial/7/Apax/train_atoms.h5
+      hash: md5
+      md5: 6a2cbda900def274803a682b0d2d7d6d
+      size: 11356466
+    - path: nodes/n_radial/7/Apax/val_atoms.h5
+      hash: md5
+      md5: feeccaad34caf333488f359971e0f834
+      size: 1472217
+    params:
+      params.yaml:
+        n_radial_7_ApaxBatchPrediction:
+          batch_size: 1
+    outs:
+    - path: nodes/n_radial/7/ApaxBatchPrediction/frames.h5
+      hash: md5
+      md5: df2d70ea7fef1e174ac05b84a4c98734
+      size: 13475534
+    - path: nodes/n_radial/7/ApaxBatchPrediction/node-meta.json
+      hash: md5
+      md5: ffe617b23bc4cb487ec9bfa645535ffd
+      size: 1299
+  n_radial_7_PredictionMetrics:
+    cmd: zntrack run ipsuite.analysis.model.predict.PredictionMetrics --name 
+      n_radial_7_PredictionMetrics
+    deps:
+    - path: nodes/AddDataH5MD_2/node-meta.json
+      hash: md5
+      md5: 4b946fcffae1256c2bf1d459e9b96e22
+      size: 447
+    - path: nodes/n_radial/7/ApaxBatchPrediction/frames.h5
+      hash: md5
+      md5: df2d70ea7fef1e174ac05b84a4c98734
+      size: 13475534
+    params:
+      params.yaml:
+        n_radial_7_PredictionMetrics:
+          figure_ymax: {}
+    outs:
+    - path: nodes/n_radial/7/PredictionMetrics/data.npz
+      hash: md5
+      md5: 2ce6e8cbe60124bb7a33cf3fba1dc913
+      size: 2217230
+    - path: nodes/n_radial/7/PredictionMetrics/energy.json
+      hash: md5
+      md5: ce9348678913d2d99d6e20f95222b47f
+      size: 162
+    - path: nodes/n_radial/7/PredictionMetrics/forces.json
+      hash: md5
+      md5: 0a47a34689a2c6b153d740713815e282
+      size: 163
+    - path: nodes/n_radial/7/PredictionMetrics/node-meta.json
+      hash: md5
+      md5: 2e61338d13d50138ec62fbbe813eeca9
+      size: 785
+    - path: nodes/n_radial/7/PredictionMetrics/plots
+      hash: md5
+      md5: d8596824e8cddab4a53da7cc7ef7c1bd.dir
+      size: 171656
+      nfiles: 2
+    - path: nodes/n_radial/7/PredictionMetrics/stress.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+    - path: nodes/n_radial/7/PredictionMetrics/stress_deviat.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+    - path: nodes/n_radial/7/PredictionMetrics/stress_hydro.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+  r_max_5_5_Apax:
+    cmd: zntrack run apax.nodes.model.Apax --name r_max_5_5_Apax
+    deps:
+    - path: nodes/AddDataH5MD/node-meta.json
+      hash: md5
+      md5: f36d01695e5b7cae341196f1239e980d
+      size: 447
+    - path: nodes/AddDataH5MD_1/node-meta.json
+      hash: md5
+      md5: 289852b7c1580ab14612a30e795b83bb
+      size: 446
+    params:
+      params.yaml:
+        r_max_5_5_Apax:
+          log_level: info
+          nl_skin: 0.5
+      config/apax-r_max-5.5.yaml:
+        callbacks:
+        - name: csv
+        data:
+          batch_size: 1
+          dataset:
+            processing: cached
+          valid_batch_size: 40
+        data_parallel: true
+        loss:
+        - atoms_exponent: 1
+          loss_type: nll
+          name: energy
+          weight: 1.0
+        - atoms_exponent: 1
+          loss_type: nll
+          name: forces
+          weight: 2.0
+        metrics:
+        - name: energy
+          reductions:
+          - mae
+        - name: forces
+          reductions:
+          - mae
+        model:
+          b_init: zeros
+          basis:
+            n_basis: 16
+            name: bessel
+            r_max: 5.5
+          calc_stress: false
+          descriptor_dtype: fp32
+          ensemble:
+            kind: shallow
+            n_members: 16
+          n_radial: 6
+          name: gmnn
+          nn:
+          - 128
+          - 128
+          readout_dtype: fp32
+          scale_shift_dtype: fp64
+          use_ntk: false
+          w_init: lecun
+        n_epochs: 10000
+        optimizer:
+          emb_lr: 0.0001
+          gradient_clipping: 10.0
+          kwargs:
+            b1: 0.85
+            b2: 0.99
+            weight_decay: 0.0002
+          name: adamw
+          nn_lr: 0.0001
+          rep_prefactor_lr: 0.0001
+          rep_scale_lr: 0.0001
+          scale_lr: 0.0001
+          schedule:
+            decay_factor: 0.96
+            name: cyclic_cosine
+            period: 50
+          shift_lr: 0.0001
+        patience: 500
+    outs:
+    - path: nodes/r_max/5_5/Apax/apax_model
+      hash: md5
+      md5: 52b625c3d8e6ebd136fdcc59bb7f0f86.dir
+      size: 25113619
+      nfiles: 51
+    - path: nodes/r_max/5_5/Apax/metrics.json
+      hash: md5
+      md5: c307f69e7864e81d7782c9f0c1693e46
+      size: 198
+    - path: nodes/r_max/5_5/Apax/node-meta.json
+      hash: md5
+      md5: 5377133cb66248c1732bb0bfa52bb14e
+      size: 2824
+    - path: nodes/r_max/5_5/Apax/train_atoms.h5
+      hash: md5
+      md5: 6a2cbda900def274803a682b0d2d7d6d
+      size: 11356466
+    - path: nodes/r_max/5_5/Apax/val_atoms.h5
+      hash: md5
+      md5: feeccaad34caf333488f359971e0f834
+      size: 1472217
+  r_max_5_5_ApaxBatchPrediction:
+    cmd: zntrack run apax.nodes.analysis.ApaxBatchPrediction --name 
+      r_max_5_5_ApaxBatchPrediction
+    deps:
+    - path: nodes/AddDataH5MD_2/node-meta.json
+      hash: md5
+      md5: 4b946fcffae1256c2bf1d459e9b96e22
+      size: 447
+    - path: nodes/r_max/5_5/Apax/apax_model
+      hash: md5
+      md5: 52b625c3d8e6ebd136fdcc59bb7f0f86.dir
+      size: 25113619
+      nfiles: 51
+    - path: nodes/r_max/5_5/Apax/metrics.json
+      hash: md5
+      md5: c307f69e7864e81d7782c9f0c1693e46
+      size: 198
+    - path: nodes/r_max/5_5/Apax/train_atoms.h5
+      hash: md5
+      md5: 6a2cbda900def274803a682b0d2d7d6d
+      size: 11356466
+    - path: nodes/r_max/5_5/Apax/val_atoms.h5
+      hash: md5
+      md5: feeccaad34caf333488f359971e0f834
+      size: 1472217
+    params:
+      params.yaml:
+        r_max_5_5_ApaxBatchPrediction:
+          batch_size: 1
+    outs:
+    - path: nodes/r_max/5_5/ApaxBatchPrediction/frames.h5
+      hash: md5
+      md5: ffd1d979791e7a97c195c201c6558032
+      size: 13506147
+    - path: nodes/r_max/5_5/ApaxBatchPrediction/node-meta.json
+      hash: md5
+      md5: 33abb0d6a84303e1bebfdd3331eb6d00
+      size: 1293
+  r_max_5_5_PredictionMetrics:
+    cmd: zntrack run ipsuite.analysis.model.predict.PredictionMetrics --name 
+      r_max_5_5_PredictionMetrics
+    deps:
+    - path: nodes/AddDataH5MD_2/node-meta.json
+      hash: md5
+      md5: 4b946fcffae1256c2bf1d459e9b96e22
+      size: 447
+    - path: nodes/r_max/5_5/ApaxBatchPrediction/frames.h5
+      hash: md5
+      md5: ffd1d979791e7a97c195c201c6558032
+      size: 13506147
+    params:
+      params.yaml:
+        r_max_5_5_PredictionMetrics:
+          figure_ymax: {}
+    outs:
+    - path: nodes/r_max/5_5/PredictionMetrics/data.npz
+      hash: md5
+      md5: d3df0a92db262fde21f6f7b4dd269771
+      size: 2217230
+    - path: nodes/r_max/5_5/PredictionMetrics/energy.json
+      hash: md5
+      md5: df3926698edcfbd4e238336e5edd87c9
+      size: 166
+    - path: nodes/r_max/5_5/PredictionMetrics/forces.json
+      hash: md5
+      md5: 05a105c0c0eec757a0bd9c4b835ad914
+      size: 165
+    - path: nodes/r_max/5_5/PredictionMetrics/node-meta.json
+      hash: md5
+      md5: e4283719b7cc3b0047a890b2722e2499
+      size: 783
+    - path: nodes/r_max/5_5/PredictionMetrics/plots
+      hash: md5
+      md5: fada1a89b2d576cb3fe5683a40954172.dir
+      size: 141159
+      nfiles: 2
+    - path: nodes/r_max/5_5/PredictionMetrics/stress.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+    - path: nodes/r_max/5_5/PredictionMetrics/stress_deviat.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2
+    - path: nodes/r_max/5_5/PredictionMetrics/stress_hydro.json
+      hash: md5
+      md5: 99914b932bd37a50b983c5e7c90ae93b
+      size: 2

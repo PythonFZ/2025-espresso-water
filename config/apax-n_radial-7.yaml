@@ -26,7 +26,6 @@ model:
   b_init: zeros
   basis:
     n_basis: 16
-    n_radial: 7
     name: bessel
     r_max: 5.5
   calc_stress: false
@@ -34,7 +33,7 @@ model:
   ensemble:
     kind: shallow
     n_members: 16
-  n_radial: 6
+  n_radial: 7
   name: gmnn
   nn:
   - 128

@@ -19,8 +19,8 @@ with project:
     val = ips.AddDataH5MD(file="data/cosmo_water_val.h5")
     test = ips.AddDataH5MD(file="data/cosmo_water_test.h5")
 
-for r_max in [2, 3, 4, 5, 6]:
-    with project.group("r_max", f"{r_max}"):
+for r_max in [2, 3, 4, 5, 5.5, 6]:
+    with project.group("r_max", f"{r_max}".replace(".", "_")):
         config = deepcopy(reference)
         config["model"]["basis"]["r_max"] = r_max
         file = Path(f"config/apax-r_max-{r_max}.yaml")
@@ -73,7 +73,7 @@ for n_basis in [4, 8, 16]:
 for n_radial in [5, 6, 7]:
     with project.group("n_radial", f"{n_radial}"):
         config = deepcopy(reference)
-        config["model"]["basis"]["n_radial"] = n_radial
+        config["model"]["n_radial"] = n_radial
         file = Path(f"config/apax-n_radial-{n_radial}.yaml")
         file.write_text(yaml.dump(config))
 

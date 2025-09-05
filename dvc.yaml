@@ -657,6 +657,55 @@ stages:
     - nodes/r_max/4/PredictionMetrics/plots
     params:
     - r_max_4_PredictionMetrics
+  r_max_5_5_Apax:
+    cmd: zntrack run apax.nodes.model.Apax --name r_max_5_5_Apax
+    deps:
+    - nodes/AddDataH5MD/node-meta.json
+    - nodes/AddDataH5MD_1/node-meta.json
+    metrics:
+    - nodes/r_max/5_5/Apax/metrics.json
+    - nodes/r_max/5_5/Apax/node-meta.json:
+        cache: true
+    outs:
+    - nodes/r_max/5_5/Apax/apax_model
+    - nodes/r_max/5_5/Apax/train_atoms.h5
+    - nodes/r_max/5_5/Apax/val_atoms.h5
+    params:
+    - config/apax-r_max-5.5.yaml: null
+    - r_max_5_5_Apax
+  r_max_5_5_ApaxBatchPrediction:
+    cmd: zntrack run apax.nodes.analysis.ApaxBatchPrediction --name r_max_5_5_ApaxBatchPrediction
+    deps:
+    - nodes/AddDataH5MD_2/node-meta.json
+    - nodes/r_max/5_5/Apax/apax_model
+    - nodes/r_max/5_5/Apax/metrics.json
+    - nodes/r_max/5_5/Apax/train_atoms.h5
+    - nodes/r_max/5_5/Apax/val_atoms.h5
+    metrics:
+    - nodes/r_max/5_5/ApaxBatchPrediction/node-meta.json:
+        cache: true
+    outs:
+    - nodes/r_max/5_5/ApaxBatchPrediction/frames.h5
+    params:
+    - r_max_5_5_ApaxBatchPrediction
+  r_max_5_5_PredictionMetrics:
+    cmd: zntrack run ipsuite.analysis.model.predict.PredictionMetrics --name r_max_5_5_PredictionMetrics
+    deps:
+    - nodes/AddDataH5MD_2/node-meta.json
+    - nodes/r_max/5_5/ApaxBatchPrediction/frames.h5
+    metrics:
+    - nodes/r_max/5_5/PredictionMetrics/energy.json
+    - nodes/r_max/5_5/PredictionMetrics/forces.json
+    - nodes/r_max/5_5/PredictionMetrics/node-meta.json:
+        cache: true
+    - nodes/r_max/5_5/PredictionMetrics/stress.json
+    - nodes/r_max/5_5/PredictionMetrics/stress_deviat.json
+    - nodes/r_max/5_5/PredictionMetrics/stress_hydro.json
+    outs:
+    - nodes/r_max/5_5/PredictionMetrics/data.npz
+    - nodes/r_max/5_5/PredictionMetrics/plots
+    params:
+    - r_max_5_5_PredictionMetrics
   r_max_5_Apax:
     cmd: zntrack run apax.nodes.model.Apax --name r_max_5_Apax
     deps:
