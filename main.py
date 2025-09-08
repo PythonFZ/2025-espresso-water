@@ -32,9 +32,7 @@ for r_max in [2, 3, 4, 5, 5.5, 6]:
             validation_data=val.frames,
         )
         test_eval = ApaxBatchPrediction(data=test.frames, model=model)
-        ips.PredictionMetrics(
-            x=test_eval.frames, y=test.frames
-        )
+        ips.PredictionMetrics(x=test_eval.frames, y=test.frames)
 
 for nn in [(16, 16), (32, 32), (64, 64), (128, 128)]:
     with project.group("nn", f"{nn[0]}-{nn[1]}"):
@@ -49,9 +47,7 @@ for nn in [(16, 16), (32, 32), (64, 64), (128, 128)]:
             validation_data=val.frames,
         )
         test_eval = ApaxBatchPrediction(data=test.frames, model=model)
-        ips.PredictionMetrics(
-            x=test_eval.frames, y=test.frames
-        )
+        ips.PredictionMetrics(x=test_eval.frames, y=test.frames)
 
 for n_basis in [4, 8, 16]:
     with project.group("n_basis", f"{n_basis}"):
@@ -66,9 +62,7 @@ for n_basis in [4, 8, 16]:
             validation_data=val.frames,
         )
         test_eval = ApaxBatchPrediction(data=test.frames, model=model)
-        ips.PredictionMetrics(
-            x=test_eval.frames, y=test.frames
-        )
+        ips.PredictionMetrics(x=test_eval.frames, y=test.frames)
 
 for n_radial in [5, 6, 7]:
     with project.group("n_radial", f"{n_radial}"):
@@ -83,9 +77,7 @@ for n_radial in [5, 6, 7]:
             validation_data=val.frames,
         )
         test_eval = ApaxBatchPrediction(data=test.frames, model=model)
-        ips.PredictionMetrics(
-            x=test_eval.frames, y=test.frames
-        )
+        ips.PredictionMetrics(x=test_eval.frames, y=test.frames)
 
 if __name__ == "__main__":
     project.build()
