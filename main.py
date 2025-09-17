@@ -1,15 +1,9 @@
-import yaml
-from pathlib import Path
-import ipsuite as ips
-from apax.nodes import Apax, ApaxBatchPrediction
 from copy import deepcopy
+from pathlib import Path
 
-# def create_apax_config_files(file: Path = Path("config/apax.yaml")):
-#     reference = yaml.safe_load(file.read_text())
-#     cutoffs = [2, 3, 4, 5, 6]
-#     nns = [(16, 16), (32, 32), (64, 64), (256, 256), (512,512)]
-#     n_basis = [4, 8, 16]
-#     n_radial = [3, 4, 6, 7]
+import ipsuite as ips
+import yaml
+from apax.nodes import Apax, ApaxBatchPrediction
 
 reference = yaml.safe_load(Path("config/apax.yaml").read_text())
 
@@ -32,9 +26,7 @@ for r_max in [2, 3, 4, 5, 5.5, 6]:
             validation_data=val.frames,
         )
         test_eval = ApaxBatchPrediction(data=test.frames, model=model)
-        ips.PredictionMetrics(
-            x=test_eval.frames, y=test.frames
-        )
+        ips.PredictionMetrics(x=test_eval.frames, y=test.frames)
 
 for nn in [(16, 16), (32, 32), (64, 64), (128, 128)]:
     with project.group("nn", f"{nn[0]}-{nn[1]}"):
@@ -49,9 +41,7 @@ for nn in [(16, 16), (32, 32), (64, 64), (128, 128)]:
             validation_data=val.frames,
         )
         test_eval = ApaxBatchPrediction(data=test.frames, model=model)
-        ips.PredictionMetrics(
-            x=test_eval.frames, y=test.frames
-        )
+        ips.PredictionMetrics(x=test_eval.frames, y=test.frames)
 
 for n_basis in [4, 8, 16]:
     with project.group("n_basis", f"{n_basis}"):
@@ -66,9 +56,7 @@ for n_basis in [4, 8, 16]:
             validation_data=val.frames,
         )
         test_eval = ApaxBatchPrediction(data=test.frames, model=model)
-        ips.PredictionMetrics(
-            x=test_eval.frames, y=test.frames
-        )
+        ips.PredictionMetrics(x=test_eval.frames, y=test.frames)
 
 for n_radial in [5, 6, 7]:
     with project.group("n_radial", f"{n_radial}"):
@@ -83,10 +71,7 @@ for n_radial in [5, 6, 7]:
             validation_data=val.frames,
         )
         test_eval = ApaxBatchPrediction(data=test.frames, model=model)
-        ips.PredictionMetrics(
-            x=test_eval.frames, y=test.frames
-        )
+        ips.PredictionMetrics(x=test_eval.frames, y=test.frames)
 
 if __name__ == "__main__":
     project.build()
-    # running on CIP5
