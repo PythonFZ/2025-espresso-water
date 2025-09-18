@@ -15,17 +15,25 @@ dependencies = [
     { name = "apax", extra = ["cuda"] },
     { name = "dvc-s3" },
     { name = "ipsuite" },
+]
+
+[package.dev-dependencies]
+dev = [
     { name = "ipykernel" },
-    { name = "jax", extra = ["cuda12"] },
+    { name = "ipywidgets" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "apax", extras = ["cuda"], specifier = ">=0.12.2" },
+    { name = "apax", extras = ["cuda"], specifier = "==0.12.3" },
     { name = "dvc-s3", specifier = ">=3.2.2" },
-    { name = "ipsuite", specifier = ">=0.2.7" },
+    { name = "ipsuite", specifier = "==0.2.7" },
+]
+
+[package.metadata.requires-dev]
+dev = [
     { name = "ipykernel", specifier = ">=6.30.1" },
-    { name = "jax", extras = ["cuda12"], specifier = "<0.7.0" },
+    { name = "ipywidgets", specifier = ">=8.1.7" },
 ]
 
 [[package]]
@@ -209,7 +217,7 @@ sdist = { url = "https://files.pythonhosted.org/packages/3e/38/7859ff46355f76f8d
 
 [[package]]
 name = "apax"
-version = "0.12.2"
+version = "0.12.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ase" },
@@ -229,9 +237,9 @@ dependencies = [
     { name = "vesin" },
     { name = "znh5md" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f8/66/345d768c57a0c1d24eab9f541925c34f2764cbdf141dc2d382be7cccf455/apax-0.12.2.tar.gz", hash = "sha256:16e52e6f3fe960125627fb513c814232bc40ed61a50b283364a151b206c33cd5", size = 581639, upload-time = "2025-07-08T13:02:18.184Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ab/b2/7bef2ffe8a9d57806e1f07a7a2ef891bc7811a6d58e71471680298fe635d/apax-0.12.3.tar.gz", hash = "sha256:d5ebcbd1fdbc916a23692b32e847a42a4af22992888c59aa0aa8aa04b920c2f2", size = 582816, upload-time = "2025-09-10T12:17:15.296Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9d/0a/84a699d815bb050141ae1a32c5db78fba18968d3c613704484b90fe4ef89/apax-0.12.2-py3-none-any.whl", hash = "sha256:c68244044c29690daf40a0a47a00fe3c06a858c2c6aac26f904cdd146b5a82c8", size = 155090, upload-time = "2025-07-08T13:02:17.176Z" },
+    { url = "https://files.pythonhosted.org/packages/7d/bf/4591f2d01362efa328d099f1e97c3d2286911d8bb53b47b4bf7205e55e7d/apax-0.12.3-py3-none-any.whl", hash = "sha256:7f8fc57226e9e11658a4455773e48f9e6678734beda0b2d59612cccbbf7740a4", size = 155615, upload-time = "2025-09-10T12:17:14.157Z" },
 ]
 
 [package.optional-dependencies]
@@ -1548,6 +1556,22 @@ wheels = [
 ]
 
 [[package]]
+name = "ipywidgets"
+version = "8.1.7"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "comm" },
+    { name = "ipython" },
+    { name = "jupyterlab-widgets" },
+    { name = "traitlets" },
+    { name = "widgetsnbextension" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/3e/48/d3dbac45c2814cb73812f98dd6b38bbcc957a4e7bb31d6ea9c03bf94ed87/ipywidgets-8.1.7.tar.gz", hash = "sha256:15f1ac050b9ccbefd45dccfbb2ef6bed0029d8278682d569d71b8dd96bee0376", size = 116721, upload-time = "2025-05-05T12:42:03.489Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/58/6a/9166369a2f092bd286d24e6307de555d63616e8ddb373ebad2b5635ca4cd/ipywidgets-8.1.7-py3-none-any.whl", hash = "sha256:764f2602d25471c213919b8a1997df04bef869251db4ca8efba1b76b1bd9f7bb", size = 139806, upload-time = "2025-05-05T12:41:56.833Z" },
+]
+
+[[package]]
 name = "iterative-telemetry"
 version = "0.0.10"
 source = { registry = "https://pypi.org/simple" }
@@ -1580,10 +1604,6 @@ wheels = [
 
 [package.optional-dependencies]
 cuda = [
-    { name = "jax-cuda12-plugin", extra = ["with-cuda"] },
-    { name = "jaxlib" },
-]
-cuda12 = [
     { name = "jax-cuda12-plugin", extra = ["with-cuda"] },
     { name = "jaxlib" },
 ]
@@ -1727,6 +1747,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/99/1b/72906d554acfeb588332eaaa6f61577705e9ec752ddb486f302dafa292d9/jupyter_core-5.8.1.tar.gz", hash = "sha256:0a5f9706f70e64786b75acba995988915ebd4601c8a52e534a40b51c95f59941", size = 88923, upload-time = "2025-05-27T07:38:16.655Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/2f/57/6bffd4b20b88da3800c5d691e0337761576ee688eb01299eae865689d2df/jupyter_core-5.8.1-py3-none-any.whl", hash = "sha256:c28d268fc90fb53f1338ded2eb410704c5449a358406e8a948b75706e24863d0", size = 28880, upload-time = "2025-05-27T07:38:15.137Z" },
+]
+
+[[package]]
+name = "jupyterlab-widgets"
+version = "3.0.15"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b9/7d/160595ca88ee87ac6ba95d82177d29ec60aaa63821d3077babb22ce031a5/jupyterlab_widgets-3.0.15.tar.gz", hash = "sha256:2920888a0c2922351a9202817957a68c07d99673504d6cd37345299e971bb08b", size = 213149, upload-time = "2025-05-05T12:32:31.004Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/43/6a/ca128561b22b60bd5a0c4ea26649e68c8556b82bc70a0c396eebc977fe86/jupyterlab_widgets-3.0.15-py3-none-any.whl", hash = "sha256:d59023d7d7ef71400d51e6fee9a88867f6e65e10a4201605d2d7f3e8f012a31c", size = 216571, upload-time = "2025-05-05T12:32:29.534Z" },
 ]
 
 [[package]]
@@ -4067,6 +4096,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/8a/98/2d9906746cdc6a6ef809ae6338005b3f21bb568bea3165cfc6a243fdc25c/wheel-0.45.1.tar.gz", hash = "sha256:661e1abd9198507b1409a20c02106d9670b2576e916d58f520316666abca6729", size = 107545, upload-time = "2024-11-23T00:18:23.513Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/0b/2c/87f3254fd8ffd29e4c02732eee68a83a1d3c346ae39bc6822dcbcb697f2b/wheel-0.45.1-py3-none-any.whl", hash = "sha256:708e7481cc80179af0e556bbf0cc00b8444c7321e2700b8d8580231d13017248", size = 72494, upload-time = "2024-11-23T00:18:21.207Z" },
+]
+
+[[package]]
+name = "widgetsnbextension"
+version = "4.0.14"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/41/53/2e0253c5efd69c9656b1843892052a31c36d37ad42812b5da45c62191f7e/widgetsnbextension-4.0.14.tar.gz", hash = "sha256:a3629b04e3edb893212df862038c7232f62973373869db5084aed739b437b5af", size = 1097428, upload-time = "2025-04-10T13:01:25.628Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ca/51/5447876806d1088a0f8f71e16542bf350918128d0a69437df26047c8e46f/widgetsnbextension-4.0.14-py3-none-any.whl", hash = "sha256:4875a9eaf72fbf5079dc372a51a9f268fc38d46f767cbf85c43a36da5cb9b575", size = 2196503, upload-time = "2025-04-10T13:01:23.086Z" },
 ]
 
 [[package]]
