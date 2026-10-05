@@ -63,7 +63,7 @@ optimizer:
   rep_prefactor_lr: 0.0001
   gradient_clipping: 10.0
 
-  kwargs: 
+  kwargs:
     weight_decay: 0.0002
     b1: 0.85
     b2: 0.99
